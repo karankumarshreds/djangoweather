@@ -1,5 +1,36 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>hello world!</h1>
+
+{% if api %}
+
+    {% if api == 'Error' %}
+        There was an error, please try later.
+    {% else %}
+
+    <div class="jumbotron">
+        <h1 class="display-4">{{api.0.Category.Name}}</h1>
+        <p class="lead">{{api.0.ReportingArea}}, Air Quality: {{api.0.AQI}}</p>
+        <hr class="my-4">
+        {% if api.0.Category.Name == "Good" %}
+            <p>Air quality is considered satisfactory, and air pollution poses little or no risk. </p>
+        {% elif api.0.Category.Name == "Moderate" %}
+            <p>Air quality is acceptable; however, for some pollutants there may be a moderate health concern for a very small number of people who are unusually sensitive to air pollution.</p>    
+        {% elif api.0.Category.Name == "Unhealthy for Sensitive Groups" %}
+            <p>Although general public is not likely to be affected at this AQI range, people with lung disease, older adults and children are at a greater risk from exposure to ozone, whereas persons with heart and lung disease, older adults and children are at greater risk from the presence of particles in the air. </p>
+        {% elif api.0.Category.Name == "Unhealthy" %}
+            <p>Everyone may begin to experience health effects; members of sensitive groups may experience more serious health effects. </p>    
+        {% elif api.0.Category.Name == "Very Unhealthy" %}
+            <p>Health alert: everyone may experience more serious health effects.</p>
+        {% elif api.0.Category.Name == "Hazardous" %}
+            <p>Health warnings of emergency conditions. The entire population is more likely to be affected. </p>
+        {% endif %}
+    
+        <!--<a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>-->
+    </div>
+
+    {% endif %}
+
+{% endif %}
+
 {% endblock %}
